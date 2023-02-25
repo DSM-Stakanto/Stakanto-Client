@@ -3,12 +3,12 @@ const path = require("path");
 const url = require("url");
 
 function createWindow() {
-  /*
-   * 넓이 1920에 높이 1080의 FHD 풀스크린 앱을 실행시킵니다.
-   * */
   const win = new BrowserWindow({
-    width: 1920,
-    height: 1080,
+    width: 1297,
+    height: 724,
+    resizable: false,
+    autoHideMenuBar: true,
+    backgroundColor:"#31295F",
   });
 
   /*
