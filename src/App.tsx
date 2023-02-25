@@ -1,11 +1,15 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./styles/theme";
+import GlobalStyle from "./styles/globalStyle";
+import Router from "./routes/routes";
 
 function App() {
   return (
     <>
-      <div></div>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Router />
+      </ThemeProvider>
     </>
   );
 }
