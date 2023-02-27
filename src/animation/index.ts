@@ -2,11 +2,11 @@ import { keyframes } from "styled-components";
 
 export const AnswerAnimation = (y: number) => keyframes`
   0% {
-    transform: translateX(120%) translateY(-${y > 0 ? y - 100 : 0}%);
+    transform: translateX(120%) translateY(-${y > 0 ? y - 120 : 0}%);
     
   }
   50% {
-    transform: translateX(0) translateY(-${y > 0 ? y - 100 : 0}%);
+    transform: translateX(0) translateY(-${y > 0 ? y - 120 : 0}%);
   }
   100% {
     transform: translateY(-${y}%);
@@ -15,7 +15,7 @@ export const AnswerAnimation = (y: number) => keyframes`
 
 export const AnswerAnimationUp = (y: number) => keyframes`
   0%, 50% {
-    transform: translateY(-${y > 0 ? y - 100 : 0}%);
+    transform: translateY(-${y > 0 ? y - 120 : 0}%);
   }
   100% {
     transform: translateY(-${y}%);
@@ -24,10 +24,10 @@ export const AnswerAnimationUp = (y: number) => keyframes`
 
 export const AnswerAnimationNone = (y: number) => keyframes`
   0% {
-    transform: translateX(0%) translateY(-${y > 0 ? y - 100 : 0}%);
+    transform: translateX(0%) translateY(-${y > 0 ? y - 120 : 0}%);
   }
   50%, 100% {
-    transform: translateX(120%) translateY(-${y > 0 ? y - 100 : 0}%);
+    transform: translateX(120%) translateY(-${y > 0 ? y - 120 : 0}%);
   }
 `;
 

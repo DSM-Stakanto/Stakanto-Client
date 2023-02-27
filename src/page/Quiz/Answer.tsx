@@ -8,6 +8,7 @@ export const QuizAnswer = ({
   cnt,
   showAnswer,
   point,
+  date,
 }: {
   hint: {
     state: number;
@@ -17,16 +18,33 @@ export const QuizAnswer = ({
   cnt: {
     state: number;
   };
-  showAnswer: (hintDiv: HTMLDivElement) => void
+  showAnswer: (hintDiv: HTMLDivElement) => void;
   point: {
     state: number;
-    setState: (value: number) => void
-  }
+    setState: (value: number) => void;
+  };
+  date: {
+    state: number;
+  };
 }) => {
+  // 30 450
+  // 20 300
+  // 10 150
+  // 1 15
+
   return (
     <>
       <Answer>
-        <span id="point">+{5000 - hint.state * (3000 - 500 * hint.state)}</span>
+        <span id="point">
+          +
+          {parseInt(
+            (
+              -(((new Date().getTime() - date.state) / 1000) * 15) +
+              5000 -
+              hint.state * (3000 - 500 * hint.state)
+            ).toString()
+          )}
+        </span>
         <div>
           <input
             placeholder="노래 이름을 입력해주세요!"
@@ -50,7 +68,16 @@ export const QuizAnswer = ({
                 // 정답
                 if (e.target.value.replace(/\s+/g, "") in result) {
                   showAnswer(hintDiv);
-                  point.setState(point.state + 5000 - hint.state * (3000 - 500 * hint.state));
+                  point.setState(
+                    point.state +
+                      parseInt(
+                        (
+                          -(((new Date().getTime() - date.state) / 1000) * 15) +
+                          5000 -
+                          hint.state * (3000 - 500 * hint.state)
+                        ).toString()
+                      )
+                  );
                   const pointDiv = document.getElementById(
                     "point"
                   ) as HTMLSpanElement;
@@ -80,7 +107,17 @@ export const QuizAnswer = ({
               }
             }}
           />
-          <button>SKIP</button>
+          <button
+            onClick={() => {
+              if (typeof document !== "undefined") {
+                const hintDiv = document.getElementById("Sub")
+                  ?.children[0] as HTMLDivElement;
+                showAnswer(hintDiv);
+              }
+            }}
+          >
+            SKIP
+          </button>
         </div>
       </Answer>
     </>

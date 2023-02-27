@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { loginApi, loginResType } from "../../api/dist";
 import { useNavigate } from "react-router-dom";
+import { Notice } from "../../components/notice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,10 +41,18 @@ const Login = () => {
               .then((res: loginResType) => {
                 sessionStorage.setItem("accessToken", res.accessToken);
                 sessionStorage.setItem("refreshToken", res.refreshToken);
-                alert("로그인이 되었습니다.")
+                Notice({
+                  state: "success",
+                  message: "성공적으로 로그인되었습니다.",
+                })?.then(() => {
+                  navigate("/main");
+                });
               })
               .catch((err) => {
-                alert("아이디 혹은 비밀번호가 틀립니다.");
+                Notice({
+                  state: "error",
+                  message: "아이디 혹은 비밀번호가 틀립니다.",
+                });
               });
           }}
         >

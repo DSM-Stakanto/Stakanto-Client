@@ -5,14 +5,17 @@ import KPOPImg from "../../asset/image/K-POP.png";
 import POPImg from "../../asset/image/POP.png";
 import GAMEImg from "../../asset/image/GAME.png";
 import JPOPImg from "../../asset/image/J-POP.png";
+import { useNavigate } from "react-router-dom";
 
 const MainPageSelect = () => {
+  const navigate = useNavigate();
   const kind = [
     {
       title: "K-POP",
       sub: `K-pop refers to popular\n
             music in Korea.`,
       img: KPOPImg,
+      genre: "kPop",
     },
     {
       title: "POP",
@@ -20,18 +23,21 @@ const MainPageSelect = () => {
       refers to music projects made relatively\n 
       easy to enjoy in Japanese pop songs.`,
       img: POPImg,
+      genre: "pop",
     },
     {
       title: "J-POP",
       sub: `K-pop refers to popular\n
             music in Korea.`,
       img: JPOPImg,
+      genre: "jPop",
     },
     {
       title: "GAME",
       sub: `K-pop refers to popular\n
             music in Korea.`,
       img: GAMEImg,
+      genre: "game",
     },
   ];
   return (
@@ -45,7 +51,11 @@ const MainPageSelect = () => {
       </Banner>
       <GridBox>
         {kind.map((t) => (
-          <div>
+          <div
+            onClick={() => {
+              navigate(`/quiz/${t.genre}`);
+            }}
+          >
             <img src={t.img} alt="" />
             <div>
               <div>{t.title}</div>

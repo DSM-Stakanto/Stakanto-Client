@@ -2,39 +2,58 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Music from "./music";
 import { MusicDummy } from "../../export/data";
-import { getMusicResType } from "../../api/dist";
+import { getMusicApi, getMusicResType } from "../../api/dist";
 import * as A from "../../animation";
 import { QuizAnswer } from "./Answer";
+import { useParams } from "react-router-dom";
+import { genreType } from "../../types/type";
+import { ResultModal } from "./ResultModal";
 
 const QuizPage = () => {
-  const [music, setMusic] = useState<any[]>(MusicDummy);
+  const genre = useParams().genre as genreType;
+  const [music, setMusic] = useState<any[]>([]);
   const [point, setPoint] = useState<number>(0);
   const [cnt, setCnt] = useState<number>(0);
-  const [auto, setAuto] = useState<number>(3);
+  const [auto, setAuto] = useState<number>(5);
   const [hint, setHint] = useState(0);
   const [answer, setAnswer] = useState<string[]>([]);
+  const [date, setDate] = useState<number>(new Date().getTime());
 
   const autoFunc = () => {
-    let time = 3;
+    let time = 5;
     const timer = setInterval(() => {
       time -= 1;
-      if (time === 0) clearInterval(timer);
+      if (time === 0) {
+        setDate(new Date().getTime());
+        clearInterval(timer);
+      }
       setAuto(time);
     }, 1000);
   };
 
   useEffect(() => {
     autoFunc();
+
+    getMusicApi(genre).then((res) => {
+      setMusic(res);
+    });
   }, []);
 
   const showAnswer = (hintDiv: HTMLDivElement) => {
+    console.log(new Date().getTime() - date);
     const iframe = document.querySelector("iframe") as HTMLIFrameElement;
     setTimeout(() => {
       iframe.classList.add("answer");
       setTimeout(() => {
-        iframe.classList.remove("answer");
-        setCnt(cnt + 1);
-        setHint(0);
+        if (cnt + 1 >= 20) {
+          setAuto(0);
+          iframe.remove();
+        } else {
+          iframe.classList.remove("answer");
+          setCnt(cnt + 1);
+          setHint(0);
+          setDate(new Date().getTime());
+        }
       }, 4500);
     }, 1500);
 
@@ -64,65 +83,77 @@ const QuizPage = () => {
 
   return (
     <MainDiv>
-      <Tag>K-POP</Tag>
-      <Sub id="Sub">
-        <div>
-          <TextBox>
-            <span>Length: {music[cnt].hint.hint1} Word</span>
-            <Tag>Hint1</Tag>
-          </TextBox>
-          <TextBox>
-            <span>Singer: {music[cnt].hint.hint2}</span>
-            <Tag>Hint2</Tag>
-          </TextBox>
-          <TextBox>
-            <span>initial: {music[cnt].hint.hint3}</span>
-            <Tag>Hint3</Tag>
-          </TextBox>
-        </div>
-        <div>
-          <PointBox>
-            {point} Point
-            <span>|</span>
-            {cnt + 1}/20
-          </PointBox>
-          {answer.map((t, i, a) => (
-            <AnswerBox
-              translateY={a.length >= 4 ? (a.length - 3) * 100 : 0}
-              animation={
-                a.length === i + 1 || a.length < 4
-                  ? A.AnswerAnimation
-                  : a.length >= i + 4
-                  ? A.AnswerAnimationNone
-                  : A.AnswerAnimationUp
-              }
-              opacity={a.length >= i + 5 ? 0 : 1}
-            >
+      {cnt === 19 && auto === 0 ? (
+        <ResultModal point={point} genre={genre} />
+      ) : (
+        <></>
+      )}
+      {music.length > 0 ? (
+        <>
+          <Tag>{genre}</Tag>
+          <Sub id="Sub">
+            <div>
               <TextBox>
-                <span>{t}</span>
+                <span>Length: {music[cnt].hint.hint1} Word</span>
+                <Tag>Hint1</Tag>
               </TextBox>
-            </AnswerBox>
-          ))}
-        </div>
-      </Sub>
+              <TextBox>
+                <span>Singer: {music[cnt].hint.hint2}</span>
+                <Tag>Hint2</Tag>
+              </TextBox>
+              <TextBox>
+                <span>initial: {music[cnt].hint.hint3}</span>
+                <Tag>Hint3</Tag>
+              </TextBox>
+            </div>
+            <div>
+              <PointBox>
+                {point} Point
+                <span>|</span>
+                {cnt + 1}/20
+              </PointBox>
+              {answer.map((t, i, a) => (
+                <AnswerBox
+                  translateY={a.length >= 4 ? (a.length - 3) * 120 : 0}
+                  animation={
+                    a.length === i + 1 || a.length < 4
+                      ? A.AnswerAnimation
+                      : a.length >= i + 4
+                      ? A.AnswerAnimationNone
+                      : A.AnswerAnimationUp
+                  }
+                  opacity={a.length >= i + 5 ? 0 : 1}
+                >
+                  <TextBox>
+                    <span>{t}</span>
+                  </TextBox>
+                </AnswerBox>
+              ))}
+            </div>
+          </Sub>
 
-      <Music auto={auto} />
+          <Music auto={auto} />
 
-      <QuizAnswer
-        hint={{ state: hint, setState: setHint }}
-        music={music}
-        cnt={{ state: cnt }}
-        showAnswer={showAnswer}
-        point={{ state: point, setState: setPoint }}
-      />
+          <QuizAnswer
+            hint={{ state: hint, setState: setHint }}
+            music={music}
+            cnt={{ state: cnt }}
+            showAnswer={showAnswer}
+            point={{ state: point, setState: setPoint }}
+            date={{ state: date }}
+          />
 
-      <iframe
-        src={`https://www.youtube.com/embed/${music[cnt].code}?start=${
-          music[cnt].start_at
-        }&autoplay=${auto === 0 ? 1 : 0}`}
-        width={"70%"}
-        height={"70%"}
-      ></iframe>
+          <iframe
+            src={`https://www.youtube.com/embed/${music[cnt].code}?start=${
+              music[cnt].start_at
+            }&autoplay=${auto === 0 ? 1 : 0}`}
+            width={"70%"}
+            height={"70%"}
+          ></iframe>
+        </>
+      ) : (
+        <></>
+      )}
     </MainDiv>
   );
 };
@@ -144,6 +175,9 @@ const MainDiv = styled.div`
     opacity: 0;
   }
 
+  .iframeNone {
+    display: none;
+  }
   .answer {
     animation: ${A.AnswerShow} 5s ease-in-out;
   }
@@ -212,6 +246,7 @@ const Sub = styled.div`
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
+
   > div:nth-child(1) > div {
     transform: translateX(-120%);
   }

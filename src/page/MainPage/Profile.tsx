@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import {
   getRankApi,
   getRankResType,
@@ -8,11 +8,17 @@ import {
   getLogResType,
 } from "../../api/dist";
 import { getLogApi } from "../../api/main/getLog";
+import { genreType } from "../../types/type";
+import { DashBoard } from "./DashBoard";
 
 const MainPageProfile = () => {
   const [rank, setRank] = useState<getRankResType>();
   const [user, setUser] = useState<getUserResType>();
   const [log, setLog] = useState<getLogResType>();
+  const [name, setName] = useState<{
+    name: "K-POP" | "POP" | "J-POP" | "GAME";
+    genre: genreType;
+  }>({ name: "K-POP", genre: "kPop" });
 
   useEffect(() => {
     getRankApi()
@@ -20,23 +26,23 @@ const MainPageProfile = () => {
         setRank(res);
       })
       .catch((err) => {
-        console.log(err);
+        // window.location.replace("/main");
       });
-
     getUserApi()
       .then((res: getUserResType) => {
+        console.log(res)
         setUser(res);
       })
       .catch((err) => {
-        console.log(err);
+        // window.location.replace("/main");
       });
 
     getLogApi({ genre: "kPop" })
       .then((res) => {
-        console.log(res);
+        setLog(res);
       })
       .catch((err) => {
-        console.log(err);
+        // window.location.replace("/main");
       });
   }, []);
 
@@ -50,13 +56,11 @@ const MainPageProfile = () => {
       ) : (
         <>
           <img src="" alt="" />
-          <Name>EastCopper</Name>
         </>
       )}
-      <DashBoard>
-        <TextBox>DashBoard</TextBox>
-        <div></div>
-      </DashBoard>
+
+      {/* <DashBoard name={{ state: name, setState: setName }} log={{state: log, setState: setLog}} /> */}
+
       <Ranking>
         <TextBox>Ranking</TextBox>
         {rank ? (
@@ -105,20 +109,11 @@ const Profile = styled.div`
 const Name = styled.div`
   font-size: 20px;
   font-weight: 900;
-  margin-left: 50px;
+  width: 70%;
+  display: flex;
+  justify-content: center;
   margin-top: 12px;
   color: ${(props) => props.theme.colors.white};
-`;
-
-const DashBoard = styled.div`
-  margin-top: 20px;
-  > div {
-    margin-top: 3px;
-    width: 212px;
-    height: 148px;
-    background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-  }
 `;
 
 const Ranking = styled.div`
@@ -156,9 +151,9 @@ const Ranking = styled.div`
     }
     > span {
       position: absolute;
-      top: 4px;
-      right: 8px;
-      color: ${(props) => props.theme.colors.white};
+      top: 1px;
+      right: 3px;
+      color: rgba(235,235,235,0.8);
       font-size: 11px;
       font-weight: 400;
     }

@@ -1,11 +1,12 @@
+import { genreType } from './../../../types/type';
 import requestToken from "../../token";
 
 export const postLogApi = async ({
   req,
 }: {
   req: {
-    genre: string;
-    point: string;
+    genre: genreType;
+    point: number;
   };
 }) => {
   await requestToken({

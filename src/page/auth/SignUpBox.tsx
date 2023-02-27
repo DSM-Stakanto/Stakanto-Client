@@ -31,6 +31,7 @@ const SignUp = ({ kind }: { kind: (value: "Login" | "SignUp") => void }) => {
         <input
           placeholder="Enter Nickname"
           onChange={(e) => changeState("name", e)}
+          maxLength={15}
         />
         <input
           placeholder="Enter ID"
