@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import {
   getRankApi,
   getRankResType,
@@ -59,7 +59,7 @@ const MainPageProfile = () => {
         </>
       )}
 
-      {/* <DashBoard name={{ state: name, setState: setName }} log={{state: log, setState: setLog}} /> */}
+      <DashBoard name={{ state: name, setState: setName }} log={{state: log, setState: setLog}} />
 
       <Ranking>
         <TextBox>Ranking</TextBox>
