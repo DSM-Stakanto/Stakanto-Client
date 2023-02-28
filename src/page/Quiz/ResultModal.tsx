@@ -1,7 +1,8 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { postLogApi } from "../../api/dist";
 import { genreType } from "../../types/type";
+import * as A from "../../animation/index"
 
 export const ResultModal = ({
   point,
@@ -46,14 +47,6 @@ export const ResultModal = ({
   );
 };
 
-const FadeIn = keyframes`
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-`;
 
 const MainDiv = styled.div`
   width: 100%;
@@ -62,7 +55,7 @@ const MainDiv = styled.div`
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 9;
   > div {
-    animation: ${FadeIn} 1s ease-in-out;
+    animation: ${A.FadeIn} 1s ease-in-out;
     position: absolute;
     z-index: 10;
     left: 50%;
@@ -100,14 +93,7 @@ const Title = styled.span`
   font-weight: 900;
   line-height: 110px;
 `;
-const BarAnimation = (h: number) => keyframes`
-    0% {
-      height: 0%;
-    }
-    100% {
-        height: ${h}%;
-    }
-`;
+
 
 const Graph = styled.div<{ height: number }>`
   width: 45px;
@@ -119,7 +105,7 @@ const Graph = styled.div<{ height: number }>`
 
   span,
   div {
-    animation: ${(props) => BarAnimation(props.height)} 1s ease-in-out;
+    animation: ${(props) => A.BarAnimation(0, props.height)} 1s ease-in-out;
     animation-fill-mode: forwards;
     width: 100%;
     position: absolute;
