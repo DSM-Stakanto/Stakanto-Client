@@ -34,10 +34,9 @@ const QuizPage = () => {
   useEffect(() => {
     autoFunc();
 
-    // getMusicApi(genre).then((res) => {
-    //   setMusic(res);
-    // });
-    setMusic(MusicDummy)
+    getMusicApi(genre).then((res) => {
+      setMusic(res);
+    });
   }, []);
 
   const showAnswer = (hintDiv: HTMLDivElement) => {
@@ -82,7 +81,7 @@ const QuizPage = () => {
 
   return (
     <MainDiv>
-      {cnt === 19 && auto === 0 ? (
+      {cnt === 20 && auto === 0 ? (
         <ResultModal point={point} genre={genre} />
       ) : (
         <></>
@@ -97,7 +96,7 @@ const QuizPage = () => {
                 <Tag>Hint1</Tag>
               </TextBox>
               <TextBox>
-                <span>Singer: {music[cnt].hint.hint2}</span>
+                <span>{genre === "game" ? "Company" : "Singer"}: {music[cnt].hint.hint2}</span>
                 <Tag>Hint2</Tag>
               </TextBox>
               <TextBox>
@@ -142,10 +141,14 @@ const QuizPage = () => {
             date={{ state: date }}
           />
 
+          <Back href="../main">
+            돌아가기 ↩
+          </Back>
+
           <iframe
             src={`https://www.youtube.com/embed/${music[cnt].code}?start=${
               music[cnt].start_at
-            }&autoplay=${auto === 0 ? 1 : 0}`}
+            }&autoplay=${auto === 0 ? 1 : 0}&loop=1`}
             width={"70%"}
             height={"70%"}
           ></iframe>
@@ -157,6 +160,17 @@ const QuizPage = () => {
   );
 };
 export default QuizPage;
+
+const Back = styled.a`
+text-decoration: none;
+  font-size: 20px;
+  font-weight: 900;
+  color: ${props => props.theme.colors.white};
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  cursor: pointer;
+`
 
 const MainDiv = styled.div`
   width: 100vw;
@@ -225,8 +239,9 @@ const TextBox = styled.div`
   margin-bottom: 12px;
   border-radius: 5px;
   box-sizing: border-box;
-  padding-top: 18px;
-  padding-left: 18px;
+  display: flex;
+  align-items: center;
+  padding:0 18px;
   span {
     color: ${(props) => props.theme.colors.white};
     font-size: 14px;

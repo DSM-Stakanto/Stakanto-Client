@@ -32,12 +32,18 @@ export const QuizAnswer = ({
         <span id="point">
           +
           {parseInt(
-            (
-              -(((new Date().getTime() - date.state) / 1000) * 15) +
-              5000 -
-              hint.state * (3000 - 500 * hint.state)
-            ).toString()
-          )}
+                          (
+                            -(((new Date().getTime() - date.state) / 1000) * 15) +
+                            5000 -
+                            hint.state * (3000 - 500 * hint.state)
+                          ).toString()
+                        ) > 0 ? parseInt(
+                          (
+                            -(((new Date().getTime() - date.state) / 1000) * 15) +
+                            5000 -
+                            hint.state * (3000 - 500 * hint.state)
+                          ).toString()
+                        ) : 0}
         </span>
         <div>
           <input
@@ -65,13 +71,21 @@ export const QuizAnswer = ({
                     showAnswer(hintDiv);
                     point.setState(
                       point.state +
-                        parseInt(
-                          (
-                            -(((new Date().getTime() - date.state) / 1000) * 15) +
-                            5000 -
-                            hint.state * (3000 - 500 * hint.state)
-                          ).toString()
-                        )
+                      parseInt(`
+                      ${parseInt(
+                        (
+                          -(((new Date().getTime() - date.state) / 1000) * 15) +
+                          5000 -
+                          hint.state * (3000 - 500 * hint.state)
+                        ).toString()
+                      ) > 0 ? parseInt(
+                        (
+                          -(((new Date().getTime() - date.state) / 1000) * 15) +
+                          5000 -
+                          hint.state * (3000 - 500 * hint.state)
+                        ).toString()
+                      ) : 0}
+                      `)
                     );
                     const pointDiv = document.getElementById(
                       "point"

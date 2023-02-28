@@ -26,7 +26,7 @@ const MainPageProfile = () => {
         setRank(res);
       })
       .catch((err) => {
-        // window.location.replace("/main");
+        window.location.replace("/main");
       });
     getUserApi()
       .then((res: getUserResType) => {
@@ -34,7 +34,7 @@ const MainPageProfile = () => {
         setUser(res);
       })
       .catch((err) => {
-        // window.location.replace("/main");
+        window.location.replace("/main");
       });
 
     getLogApi({ genre: "kPop" })
@@ -42,7 +42,7 @@ const MainPageProfile = () => {
         setLog(res);
       })
       .catch((err) => {
-        // window.location.replace("/main");
+        window.location.replace("/main");
       });
   }, []);
 
