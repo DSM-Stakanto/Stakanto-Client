@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { SignUpApi } from "../../api/dist";
 import Roll from "../../asset/image/rotating-arrow-to-the-left.png";
+import { Notice } from "../../components/notice";
 import { ProfileImg } from "../../export/data";
 
 const SignUp = ({ kind }: { kind: (value: "Login" | "SignUp") => void }) => {
@@ -22,8 +23,8 @@ const SignUp = ({ kind }: { kind: (value: "Login" | "SignUp") => void }) => {
   return (
     <LoginBox>
       <ImgBox>
-        <img src={ProfileImg[cnt % ProfileImg.length]} alt=" " />
-        <div onClick={() => setCnt(cnt + 1)}>
+        <img src={ProfileImg[cnt]} alt=" " />
+        <div onClick={() => setCnt((cnt + 1) % ProfileImg.length)}>
           <img src={Roll} alt=" " />
         </div>
       </ImgBox>
@@ -45,20 +46,35 @@ const SignUp = ({ kind }: { kind: (value: "Login" | "SignUp") => void }) => {
       </InputBox>
       <button
         onClick={() => {
-          SignUpApi({
-            req: {
-              accountID: req.accountID,
-              password: req.password,
-              image: ProfileImg[cnt % ProfileImg.length],
-              name: req.name,
-            },
-          })
-            .then((res) => {
-              kind("Login");
-            })
-            .catch((err) => {
-              alert("이미 등록된 사용자입니다.");
+          if (Object.values(req).includes("")) {
+            Notice({
+              state: "error",
+              message: "내용을 입력해주세요.",
             });
+          }
+          else {
+            SignUpApi({
+              req: {
+                accountID: req.accountID,
+                password: req.password,
+                image: ProfileImg[cnt],
+                name: req.name,
+              },
+            })
+              .then((res) => {
+                Notice({
+                  state: "success",
+                  message: "성공적으로 등록되었습니다.",
+                })
+                kind("Login");
+              })
+              .catch((err) => {
+                Notice({
+                  state: "error",
+                  message: "이미 등록된 사용자입니다.",
+                });
+              });
+          }
         }}
       >
         SignUp
@@ -103,8 +119,8 @@ const ImgBox = styled.div`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 85%;
-    height: 85%;
+    width: 136px;
+    height: 136px;
     border-radius: 50%;
   }
   div {
@@ -152,5 +168,14 @@ const LoginBox = styled.div`
     font-weight: 500;
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.3);
+
+    transition: all 0.2s ease;
+
+    &:hover {
+    transform: translate3d(0, 10%, 0);
+  }
+  &:active {
+    transform: translate3d(0, 20%, 0);
+  }
   }
 `;
