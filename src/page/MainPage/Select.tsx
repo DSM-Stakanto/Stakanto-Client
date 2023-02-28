@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import BannerImg from "../../asset/image/banner.png";
 import KPOPImg from "../../asset/image/K-POP.png";
@@ -12,30 +11,25 @@ const MainPageSelect = () => {
   const kind = [
     {
       title: "K-POP",
-      sub: `K-pop refers to popular\n
-            music in Korea.`,
+      sub: `K-pop refers to popular music in Korea.`,
       img: KPOPImg,
       genre: "kPop",
     },
     {
       title: "POP",
-      sub: `J-pop is a genre that collectively\n
-      refers to music projects made relatively\n 
-      easy to enjoy in Japanese pop songs.`,
+      sub: `Pop is the most basic genre of popular music, which features easy-to-attract rhythm elements, mainstream style, and traditional structure.`,
       img: POPImg,
       genre: "pop",
     },
     {
       title: "J-POP",
-      sub: `K-pop refers to popular\n
-            music in Korea.`,
+      sub: `J-pop is a genre that collectively refers to music projects made relatively easy to enjoy in Japanese pop songs.`,
       img: JPOPImg,
       genre: "jPop",
     },
     {
       title: "GAME",
-      sub: `K-pop refers to popular\n
-            music in Korea.`,
+      sub: `Game bgm not only refers to OSTs like original scores (songs without lyrics) composed as BGM, but also includes inserted songs with existing songs.`,
       img: GAMEImg,
       genre: "game",
     },
@@ -58,7 +52,12 @@ const MainPageSelect = () => {
           >
             <img src={t.img} alt="" />
             <div>
-              <div>{t.title}</div>
+              <div>
+                <span>{t.title}</span>
+                <br/>
+                <span>{t.sub}</span>
+              </div>
+              
             </div>
           </div>
         ))}
@@ -81,6 +80,19 @@ const GridBox = styled.div`
     border-radius: 15px;
     overflow: hidden;
     position: relative;
+
+    &:hover {
+      > div {
+        width: 110%;
+        > div {
+          transform: translateY(-50px);
+          >span {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
     img {
       width: 100%;
       height: 100%;
@@ -89,23 +101,37 @@ const GridBox = styled.div`
     }
     > div {
       position: absolute;
+      transition: 1s;
       right: 0;
       z-index: 2;
-      width: 315px;
+      width: 50%;
       height: 100%;
-      transform: translateX(120px);
-      backdrop-filter: blur(2.5px);
       background-color: rgba(0, 0, 0, 0.7);
       clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 10% 100%, 0% 50%);
-      > div {
+      backdrop-filter: blur(2.5px);
+      cursor: pointer;
+      div {
+        transition: 1s;
         position: absolute;
         top: 50%;
         left: 25%;
         transform: translate(-15%, -50%);
+        color: ${(props) => props.theme.colors.white};
+        width: 70%;
+        span:nth-child(1){
         font-size: 30px;
         font-weight: 900;
+        opacity: 1;
+        top: -30%;
         text-shadow: 0 0 7px ${(props) => props.theme.colors.pink};
-        color: ${(props) => props.theme.colors.white};
+        }
+        span {
+          top: 170%;
+          width: 300px;
+          opacity: 0;
+          transition: 1s;
+            position: absolute;
+        }
       }
     }
   }
