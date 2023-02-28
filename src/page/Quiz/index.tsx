@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import styled from "styled-components";
 import Music from "./music";
 import { MusicDummy } from "../../export/data";
@@ -34,28 +34,27 @@ const QuizPage = () => {
   useEffect(() => {
     autoFunc();
 
-    getMusicApi(genre).then((res) => {
-      setMusic(res);
-    });
+    // getMusicApi(genre).then((res) => {
+    //   setMusic(res);
+    // });
+    setMusic(MusicDummy)
   }, []);
 
   const showAnswer = (hintDiv: HTMLDivElement) => {
     console.log(new Date().getTime() - date);
     const iframe = document.querySelector("iframe") as HTMLIFrameElement;
+    iframe.classList.add("answer");
     setTimeout(() => {
-      iframe.classList.add("answer");
-      setTimeout(() => {
-        if (cnt + 1 >= 20) {
-          setAuto(0);
-          iframe.remove();
-        } else {
-          iframe.classList.remove("answer");
-          setCnt(cnt + 1);
-          setHint(0);
-          setDate(new Date().getTime());
-        }
-      }, 4500);
-    }, 1500);
+      if (cnt + 1 >= 20) {
+        setAuto(0);
+        iframe.remove();
+      } else {
+        iframe.classList.remove("answer");
+        setCnt(cnt + 1);
+        setHint(0);
+        setDate(new Date().getTime());
+      }
+    }, 6000);
 
     hintDiv.children[0].classList.add("hint");
     setTimeout(() => {
@@ -180,6 +179,7 @@ const MainDiv = styled.div`
   }
   .answer {
     animation: ${A.AnswerShow} 5s ease-in-out;
+    animation-delay: 1.5s;
   }
 `;
 
