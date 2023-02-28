@@ -46,6 +46,7 @@ const MainDiv = styled.div`
   display: flex;
 `;
 
+
 const Title = styled.div`
   margin-top: 100px;
   display: flex;
@@ -74,5 +75,8 @@ const Title = styled.div`
     font-size: 18px;
     font-weight: 900;
     text-decoration: none;
+    &:hover {    background-color:rgba(235,235,235,0.9);
+transition: 0.3s;
+    }
   }
 `;
