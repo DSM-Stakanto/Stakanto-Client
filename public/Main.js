@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require("electron");
 const path = require("path");
 const url = require("url");
 
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1297,
@@ -9,6 +10,8 @@ function createWindow() {
     resizable: false,
     autoHideMenuBar: true,
     backgroundColor:"#31295F",
+    icon: path.join(__dirname, './logo.jpg'),
+    name: "Stakanto"
   });
 
   /*
