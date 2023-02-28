@@ -1,6 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import Siriwave from "react-siriwave";
 import MusicIcon from "../../asset/image/music.png";
+import * as A from "../../animation/index"
 
 const Music = ({ auto }: { auto: number }) => {
   return (
@@ -59,16 +60,7 @@ const MainDiv = styled.div`
   align-items: center;
 `;
 
-const WaveAnimation = keyframes`
-    0% {
-        transform: scale(1,1) ;
-        opacity: 0.6;
-    }
-    100% {
-        transform: scale(3,3) ;
-        opacity: 0;
-    }
-`;
+
 
 const Wave = styled.div<{ delay: number }>`
   border-radius: 50%;
@@ -79,45 +71,13 @@ const Wave = styled.div<{ delay: number }>`
 
   margin-top: -5px;
   z-index: 1;
-  animation: ${WaveAnimation} 3s linear infinite;
+  animation: ${A.WaveAnimation} 3s linear infinite;
   animation-delay: ${(props) => props.delay}s;
   position: absolute;
   left: 46.2%;
 `;
 
-const BitAniamtion = keyframes`
-    0%, 60% {
-        transform: scale(1,1);
-    }
-    70% {
-        transform: scale(1.1,1.1);
-    }
-    90% {
-        transform: scale(0.95, 0.95);
-    }
-`;
 
-const Shake = keyframes`
-  0%, 100% {
-    filter: invert(0%);
-  }
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  
-  20%, 80% {
-    filter: invert(16%) sepia(89%) saturate(6054%) hue-rotate(358deg) brightness(97%) contrast(113%);
-    transform: translate3d(2px, 0, 0);
-  }
-
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
-  }
-
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
-  }
-`;
 
 const Bit = styled.div`
   position: absolute;
@@ -131,7 +91,7 @@ const Bit = styled.div`
     border-radius: 50%;
     background-color: ${(props) => props.theme.colors.white};
     margin-bottom: 10px;
-    animation: ${BitAniamtion} 1s linear infinite;
+    animation: ${A.BitAniamtion} 1s linear infinite;
     animation-delay: 0.6s;
     img {
       width: 50px;
@@ -149,7 +109,7 @@ const Bit = styled.div`
       font-weight: 900;
     }
     .fail {
-      animation: ${Shake} 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      animation: ${A.Shake} 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
     }
   }
 `;
