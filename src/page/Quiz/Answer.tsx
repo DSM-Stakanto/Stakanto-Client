@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { PlusAnimation } from "../../animation";
 
@@ -27,11 +26,6 @@ export const QuizAnswer = ({
     state: number;
   };
 }) => {
-  // 30 450
-  // 20 300
-  // 10 150
-  // 1 15
-
   return (
     <>
       <Answer>
@@ -54,65 +48,70 @@ export const QuizAnswer = ({
                 e.target.value !== "" &&
                 typeof document !== "undefined"
               ) {
-                const result = music[cnt.state].answer
-                  .split(",")
-                  .reduce((acc: {}, elem: string) => {
-                    return {
-                      ...acc,
-                      [elem]: elem,
-                    };
-                  }, {});
-                const hintDiv = document.getElementById("Sub")
-                  ?.children[0] as HTMLDivElement;
-
-                // 정답
-                if (e.target.value.replace(/\s+/g, "") in result) {
-                  showAnswer(hintDiv);
-                  point.setState(
-                    point.state +
-                      parseInt(
-                        (
-                          -(((new Date().getTime() - date.state) / 1000) * 15) +
-                          5000 -
-                          hint.state * (3000 - 500 * hint.state)
-                        ).toString()
-                      )
-                  );
-                  const pointDiv = document.getElementById(
-                    "point"
-                  ) as HTMLSpanElement;
-                  pointDiv.classList.add("plus");
-                  setTimeout(() => {
-                    pointDiv.classList.remove("plus");
-                  }, 2000);
-                } else {
-                  // 오답
-                  if (hint.state < 3) {
-                    const Bit = document.getElementById(
-                      "BitImage"
-                    ) as HTMLImageElement;
-                    Bit.classList.add("fail");
-                    setTimeout(() => {
-                      Bit.classList.remove("fail");
-                    }, 820);
-
-                    hintDiv.children[hint.state].classList.add("hint");
-                    hint.setState(hint.state + 1);
-                  } else {
-                    //정답 공개
+                if (document.querySelector("iframe")?.className !== "answer") {
+                  const result = music[cnt.state].answer
+                    .split(",")
+                    .reduce((acc: {}, elem: string) => {
+                      return {
+                        ...acc,
+                        [elem]: elem,
+                      };
+                    }, {});
+                  const hintDiv = document.getElementById("Sub")
+                    ?.children[0] as HTMLDivElement;
+  
+                  // 정답
+                  if (e.target.value.replace(/\s+/g, "") in result) {
                     showAnswer(hintDiv);
+                    point.setState(
+                      point.state +
+                        parseInt(
+                          (
+                            -(((new Date().getTime() - date.state) / 1000) * 15) +
+                            5000 -
+                            hint.state * (3000 - 500 * hint.state)
+                          ).toString()
+                        )
+                    );
+                    const pointDiv = document.getElementById(
+                      "point"
+                    ) as HTMLSpanElement;
+                    pointDiv.classList.add("plus");
+                    setTimeout(() => {
+                      pointDiv.classList.remove("plus");
+                    }, 2000);
+                  } else {
+                    // 오답
+                    if (hint.state < 3) {
+                      const Bit = document.getElementById(
+                        "BitImage"
+                      ) as HTMLImageElement;
+                      Bit.classList.add("fail");
+                      setTimeout(() => {
+                        Bit.classList.remove("fail");
+                      }, 820);
+  
+                      hintDiv.children[hint.state].classList.add("hint");
+                      hint.setState(hint.state + 1);
+                    } else {
+                      //정답 공개
+                      showAnswer(hintDiv);
+                    }
                   }
+                  e.target.value = "";
                 }
-                e.target.value = "";
               }
             }}
           />
           <button
             onClick={() => {
               if (typeof document !== "undefined") {
-                const hintDiv = document.getElementById("Sub")
-                  ?.children[0] as HTMLDivElement;
-                showAnswer(hintDiv);
+                console.log(document.querySelector("iframe")?.className !== "answer")
+                if (document.querySelector("iframe")?.className !== "answer") {
+                  const hintDiv = document.getElementById("Sub")
+                    ?.children[0] as HTMLDivElement;
+                  showAnswer(hintDiv);
+                }
               }
             }}
           >
