@@ -37,23 +37,31 @@ const Login = () => {
         />
         <button
           onClick={() => {
-            loginApi({ req: req })
-              .then((res: loginResType) => {
-                sessionStorage.setItem("accessToken", res.accessToken);
-                sessionStorage.setItem("refreshToken", res.refreshToken);
-                Notice({
-                  state: "success",
-                  message: "성공적으로 로그인되었습니다.",
-                })?.then(() => {
-                  navigate("/main");
-                });
-              })
-              .catch((err) => {
-                Notice({
-                  state: "error",
-                  message: "아이디 혹은 비밀번호가 틀립니다.",
-                });
+            if (Object.values(req).includes("")) {
+              Notice({
+                state: "error",
+                message: "내용을 입력해주세요.",
               });
+            }
+            else {
+              loginApi({ req: req })
+                .then((res: loginResType) => {
+                  sessionStorage.setItem("accessToken", res.accessToken);
+                  sessionStorage.setItem("refreshToken", res.refreshToken);
+                  Notice({
+                    state: "success",
+                    message: "성공적으로 로그인되었습니다.",
+                  })?.then(() => {
+                    navigate("/main");
+                  });
+                })
+                .catch((err) => {
+                  Notice({
+                    state: "error",
+                    message: "아이디 혹은 비밀번호가 틀립니다.",
+                  });
+                });
+            }
           }}
         >
           Login
@@ -113,5 +121,13 @@ const InputBox = styled.div`
     color: #fff;
     font-weight: 500;
     font-size: 19px;
+    transition: all 0.2s ease;
+
+    &:hover {
+    transform: translate3d(0, 10%, 0);
+  }
+  &:active {
+    transform: translate3d(0, 20%, 0);
+  }
   }
 `;
