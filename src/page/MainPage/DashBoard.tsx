@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { getLogApi, getLogResType } from "../../api/dist";
 import { genreType } from "../../types/type";
+import * as A from "../../animation/index"
 
 export const DashBoard = ({
   name,
@@ -80,7 +81,9 @@ export const DashBoard = ({
               ))}
             </>
           ) : (
-            <>최근 기록이 없습니다.</>
+            <>
+            최근 기록이 없습니다.
+            </>
           )}
         </div>
       </DashBoardDiv>
@@ -88,19 +91,10 @@ export const DashBoard = ({
   );
 };
 
-const fadeInDataList = keyframes`
-    0% {
-        transform: translateY(-50px);
-        opacity: 0;
-    }100% {
-        transform: translateY(0);
-        opacity: 1;
-    }
-`;
 
 const DataList = styled.div<{ state: boolean | string }>`
   position: absolute;
-  animation: ${fadeInDataList} 0.5s;
+  animation: ${A.FadeInDataList} 0.5s;
   width: 100%;
   z-index: 2;
   transition: 1s;
@@ -178,7 +172,8 @@ const Bar = styled.div<{ height: number }>`
     background-color: ${(props) => props.theme.colors.pink};
     border-radius: 8px;
     width: 8px;
-    height: ${(props) => props.height}%;
+    animation: ${(props) =>A.BarAnimation(0, props.height)} 1s ease-in-out;
+    animation-fill-mode: forwards;
   }
   span {
     position: absolute;
@@ -188,7 +183,8 @@ const Bar = styled.div<{ height: number }>`
   }
   > span:nth-child(1) {
     bottom: 0;
-    height: ${(props) => props.height + 35}%;
+    animation: ${(props) =>A.BarAnimation(35, props.height)} 1s ease-in-out;
+    animation-fill-mode: forwards;
   }
 
   > span:nth-last-child(1) {
