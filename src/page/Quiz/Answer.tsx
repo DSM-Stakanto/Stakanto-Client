@@ -37,13 +37,13 @@ export const QuizAnswer = ({
                             5000 -
                             hint.state * (3000 - 500 * hint.state)
                           ).toString()
-                        ) > 0 ? parseInt(
+                        ) > 100 ? parseInt(
                           (
                             -(((new Date().getTime() - date.state) / 1000) * 15) +
                             5000 -
                             hint.state * (3000 - 500 * hint.state)
                           ).toString()
-                        ) : 0}
+                        ) : 100}
         </span>
         <div>
           <input
@@ -78,13 +78,13 @@ export const QuizAnswer = ({
                           5000 -
                           hint.state * (3000 - 500 * hint.state)
                         ).toString()
-                      ) > 0 ? parseInt(
+                      ) > 100 ? parseInt(
                         (
                           -(((new Date().getTime() - date.state) / 1000) * 15) +
                           5000 -
                           hint.state * (3000 - 500 * hint.state)
                         ).toString()
-                      ) : 0}
+                      ) : 100}
                       `)
                     );
                     const pointDiv = document.getElementById(

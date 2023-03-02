@@ -18,6 +18,7 @@ const QuizPage = () => {
   const [hint, setHint] = useState(0);
   const [answer, setAnswer] = useState<string[]>([]);
   const [date, setDate] = useState<number>(new Date().getTime());
+  const [game,setGame] = useState(true)
 
   const autoFunc = () => {
     let time = 5;
@@ -46,6 +47,7 @@ const QuizPage = () => {
     setTimeout(() => {
       if (cnt + 1 >= 20) {
         setAuto(0);
+        setGame(false)
         iframe.remove();
       } else {
         iframe.classList.remove("answer");
@@ -81,7 +83,7 @@ const QuizPage = () => {
 
   return (
     <MainDiv>
-      {cnt === 20 && auto === 0 ? (
+      {!game ? (
         <ResultModal point={point} genre={genre} />
       ) : (
         <></>
