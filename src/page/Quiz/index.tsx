@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Music from "./music";
 import { MusicDummy } from "../../export/data";
@@ -18,7 +18,7 @@ const QuizPage = () => {
   const [hint, setHint] = useState(0);
   const [answer, setAnswer] = useState<string[]>([]);
   const [date, setDate] = useState<number>(new Date().getTime());
-  const [game,setGame] = useState(true)
+  const [game, setGame] = useState(true);
 
   const autoFunc = () => {
     let time = 5;
@@ -47,7 +47,7 @@ const QuizPage = () => {
     setTimeout(() => {
       if (cnt + 1 >= 20) {
         setAuto(0);
-        setGame(false)
+        setGame(false);
         iframe.remove();
       } else {
         iframe.classList.remove("answer");
@@ -83,11 +83,7 @@ const QuizPage = () => {
 
   return (
     <MainDiv>
-      {!game ? (
-        <ResultModal point={point} genre={genre} />
-      ) : (
-        <></>
-      )}
+      {!game ? <ResultModal point={point} genre={genre} /> : <></>}
       {music.length > 0 ? (
         <>
           <Tag>{genre}</Tag>
@@ -98,7 +94,10 @@ const QuizPage = () => {
                 <Tag>Hint1</Tag>
               </TextBox>
               <TextBox>
-                <span>{genre === "game" ? "Company" : "Singer"}: {music[cnt].hint.hint2}</span>
+                <span>
+                  {genre === "game" ? "Company" : "Singer"}:{" "}
+                  {music[cnt].hint.hint2}
+                </span>
                 <Tag>Hint2</Tag>
               </TextBox>
               <TextBox>
@@ -143,9 +142,7 @@ const QuizPage = () => {
             date={{ state: date }}
           />
 
-          <Back href="../main">
-            돌아가기 ↩
-          </Back>
+          <Back href="../main">돌아가기 ↩</Back>
 
           <iframe
             src={`https://www.youtube.com/embed/${music[cnt].code}?start=${
@@ -164,15 +161,15 @@ const QuizPage = () => {
 export default QuizPage;
 
 const Back = styled.a`
-text-decoration: none;
+  text-decoration: none;
   font-size: 20px;
   font-weight: 900;
-  color: ${props => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.white};
   position: absolute;
   bottom: 12px;
   left: 12px;
   cursor: pointer;
-`
+`;
 
 const MainDiv = styled.div`
   width: 100vw;
@@ -243,7 +240,7 @@ const TextBox = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  padding:0 18px;
+  padding: 0 18px;
   span {
     color: ${(props) => props.theme.colors.white};
     font-size: 14px;

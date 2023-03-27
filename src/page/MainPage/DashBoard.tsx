@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { getLogApi, getLogResType } from "../../api/dist";
 import { genreType } from "../../types/type";
-import * as A from "../../animation/index"
+import * as A from "../../animation/index";
 
 export const DashBoard = ({
   name,
@@ -74,23 +74,24 @@ export const DashBoard = ({
             <>
               {log.state.scores.map((elm, i) => (
                 <Bar height={elm / 1000}>
-                  <span>{elm >= 1000 && elm < 100000 ? `${parseInt(`${elm / 1000}`)}K`: elm}</span>
+                  <span>
+                    {elm >= 1000 && elm < 100000
+                      ? `${parseInt(`${elm / 1000}`)}K`
+                      : elm}
+                  </span>
                   <div />
                   <span>{i}</span>
                 </Bar>
               ))}
             </>
           ) : (
-            <>
-            최근 기록이 없습니다.
-            </>
+            <>최근 기록이 없습니다.</>
           )}
         </div>
       </DashBoardDiv>
     </>
   );
 };
-
 
 const DataList = styled.div<{ state: boolean | string }>`
   position: absolute;
@@ -125,7 +126,7 @@ const DataList = styled.div<{ state: boolean | string }>`
 
 const DashBoardDiv = styled.div`
   margin-top: 20px;
-  color: ${props => props.theme.colors.white};
+  color: ${(props) => props.theme.colors.white};
   > div {
     margin-top: 3px;
     width: 212px;
@@ -172,7 +173,7 @@ const Bar = styled.div<{ height: number }>`
     background-color: ${(props) => props.theme.colors.pink};
     border-radius: 8px;
     width: 8px;
-    animation: ${(props) =>A.BarAnimation(0, props.height)} 1s ease-in-out;
+    animation: ${(props) => A.BarAnimation(0, props.height)} 1s ease-in-out;
     animation-fill-mode: forwards;
   }
   span {
@@ -183,7 +184,7 @@ const Bar = styled.div<{ height: number }>`
   }
   > span:nth-child(1) {
     bottom: 0;
-    animation: ${(props) =>A.BarAnimation(35, props.height)} 1s ease-in-out;
+    animation: ${(props) => A.BarAnimation(35, props.height)} 1s ease-in-out;
     animation-fill-mode: forwards;
   }
 

@@ -32,18 +32,20 @@ export const QuizAnswer = ({
         <span id="point">
           +
           {parseInt(
-                          (
-                            -(((new Date().getTime() - date.state) / 1000) * 15) +
-                            5000 -
-                            hint.state * (3000 - 500 * hint.state)
-                          ).toString()
-                        ) > 100 ? parseInt(
-                          (
-                            -(((new Date().getTime() - date.state) / 1000) * 15) +
-                            5000 -
-                            hint.state * (3000 - 500 * hint.state)
-                          ).toString()
-                        ) : 100}
+            (
+              -(((new Date().getTime() - date.state) / 1000) * 15) +
+              5000 -
+              hint.state * (3000 - 500 * hint.state)
+            ).toString()
+          ) > 100
+            ? parseInt(
+                (
+                  -(((new Date().getTime() - date.state) / 1000) * 15) +
+                  5000 -
+                  hint.state * (3000 - 500 * hint.state)
+                ).toString()
+              )
+            : 100}
         </span>
         <div>
           <input
@@ -65,26 +67,36 @@ export const QuizAnswer = ({
                     }, {});
                   const hintDiv = document.getElementById("Sub")
                     ?.children[0] as HTMLDivElement;
-  
+
                   // 정답
                   if (e.target.value.replace(/\s+/g, "") in result) {
                     showAnswer(hintDiv);
                     point.setState(
                       point.state +
-                      parseInt(`
-                      ${parseInt(
-                        (
-                          -(((new Date().getTime() - date.state) / 1000) * 15) +
-                          5000 -
-                          hint.state * (3000 - 500 * hint.state)
-                        ).toString()
-                      ) > 100 ? parseInt(
-                        (
-                          -(((new Date().getTime() - date.state) / 1000) * 15) +
-                          5000 -
-                          hint.state * (3000 - 500 * hint.state)
-                        ).toString()
-                      ) : 100}
+                        parseInt(`
+                      ${
+                        parseInt(
+                          (
+                            -(
+                              ((new Date().getTime() - date.state) / 1000) *
+                              15
+                            ) +
+                            5000 -
+                            hint.state * (3000 - 500 * hint.state)
+                          ).toString()
+                        ) > 100
+                          ? parseInt(
+                              (
+                                -(
+                                  ((new Date().getTime() - date.state) / 1000) *
+                                  15
+                                ) +
+                                5000 -
+                                hint.state * (3000 - 500 * hint.state)
+                              ).toString()
+                            )
+                          : 100
+                      }
                       `)
                     );
                     const pointDiv = document.getElementById(
@@ -104,7 +116,7 @@ export const QuizAnswer = ({
                       setTimeout(() => {
                         Bit.classList.remove("fail");
                       }, 820);
-  
+
                       hintDiv.children[hint.state].classList.add("hint");
                       hint.setState(hint.state + 1);
                     } else {
@@ -120,7 +132,9 @@ export const QuizAnswer = ({
           <button
             onClick={() => {
               if (typeof document !== "undefined") {
-                console.log(document.querySelector("iframe")?.className !== "answer")
+                console.log(
+                  document.querySelector("iframe")?.className !== "answer"
+                );
                 if (document.querySelector("iframe")?.className !== "answer") {
                   const hintDiv = document.getElementById("Sub")
                     ?.children[0] as HTMLDivElement;
